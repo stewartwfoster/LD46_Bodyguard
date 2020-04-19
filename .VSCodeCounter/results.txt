@@ -1,0 +1,38 @@
+Date : 2020-04-19 01:56:36
+Directory : c:\Users\swfos\Documents\Projects\Games\LD46
+Total : 13 files,  1245 codes, 41 comments, 246 blanks, all 1532 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Lua      |         13 |      1,245 |         41 |        246 |      1,532 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                  | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                     |         13 |      1,245 |         41 |        246 |      1,532 |
+| Game                                                                  |         13 |      1,245 |         41 |        246 |      1,532 |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                              | language | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\animated_object.lua | Lua      |         77 |          1 |         13 |         91 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\bodyparts.lua       | Lua      |        310 |          6 |         18 |        334 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\fonts.lua           | Lua      |          6 |          0 |          0 |          6 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\game.lua            | Lua      |        222 |         15 |         60 |        297 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\intermission.lua    | Lua      |        132 |          2 |         31 |        165 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\main.lua            | Lua      |         26 |          0 |         12 |         38 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\main_menu.lua       | Lua      |        101 |          1 |         28 |        130 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\object.lua          | Lua      |         44 |          0 |         15 |         59 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\person.lua          | Lua      |        146 |          6 |         32 |        184 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\radio.lua           | Lua      |        117 |          8 |         23 |        148 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\scene.lua           | Lua      |         31 |          0 |          9 |         40 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\sounds.lua          | Lua      |         12 |          0 |          2 |         14 |
+| c:\Users\swfos\Documents\Projects\Games\LD46\Game\utils.lua           | Lua      |         21 |          2 |          3 |         26 |
+| Total                                                                 |          |      1,245 |         41 |        246 |      1,532 |
++-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
