@@ -297,11 +297,23 @@ purple_shirt.name = "purple shirt"
 purple_shirt.messages = {"purple shirt"}
 table.insert(bodyparts.torso, purple_shirt)
 
+local yellow_shirt = deepcopy(bodyparts.torso[1])
+yellow_shirt.color = {255/255, 231/255, 74/255}
+yellow_shirt.name = "yellow shirt"
+yellow_shirt.messages = {"yellow shirt"}
+table.insert(bodyparts.torso, yellow_shirt)
+
 local striped_red = deepcopy(bodyparts.torso[2])
 striped_red.color = {188/255, 45/255, 64/255}
 striped_red.name = "striped red shirt"
 striped_red.messages = {"striped shirt", "red shirt"}
 table.insert(bodyparts.torso, striped_red)
+
+local striped_brown = deepcopy(bodyparts.torso[2])
+striped_brown.color = {158/255, 104/255, 69/255}
+striped_brown.name = "striped brown shirt"
+striped_brown.messages = {"striped shirt", "brown shirt"}
+table.insert(bodyparts.torso, striped_brown)
 
 -- PANTS
 local grey_pants = deepcopy(bodyparts.legs[1])

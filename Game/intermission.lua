@@ -62,15 +62,6 @@ function intermission:new(width, height, previous_scene, menu_scene, level, game
     }, false, self.radiobox)
     self.radio:setanim("idle")
 
-    love.mouse.setVisible(false)
-    self.cursor = animated_object(0, 0, 0, 0, {
-        idle = {
-            images = {{"crosshair1.png", "crosshair2.png"}},
-            time = 0.2
-        }
-    }, true)
-    self.cursor:setanim("idle")
-
     self:screenshake()
 
     self.msg = ""
@@ -102,7 +93,6 @@ function intermission:screenshake(duration, magnitude)
 end
 
 function intermission:update(dt)
-    x, y = love.mouse.getPosition()
 
     -- screenshake
     if self.screenshake_time < self.screenshake_duration then
@@ -114,8 +104,6 @@ function intermission:update(dt)
     end
 
     self.radio:update(dt)
-
-    self.cursor:update_anim(dt)
 
     return self
 end
@@ -134,8 +122,6 @@ function intermission:draw()
     end
 
     self.radio:draw_all()
-
-    self.cursor:draw()
     
     return self
 end

@@ -11,4 +11,3 @@ music = {
 }
 
 music.track1:setLooping(true)
-music.track1:play()

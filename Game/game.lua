@@ -15,23 +15,16 @@ function game:new(width, height, previous_scene, level)
     self.level = level
     print("starting level", self.level)
 
-    self.num_civilians = get_num_civilians(self.level)
+    self.num_civilians = math.floor(get_num_civilians(self.level))
     self.gameplaytime = 0
+    self.game_started = false
 
-    self.canstabtime = 20 -- can stab after 20 seconds
+    self.canstabtime = 35 -- can stab after 35 seconds
     self.stab_cooldown = 5
     self.stab_cooldown_timer = 0
+    self.stab_attempt_time = 120 -- attempts a stab after 120 seconds
     self.on_stab_cooldown = false
     self.can_shoot = false
-
-    love.mouse.setVisible(false)
-    self.cursor = animated_object(0, 0, 0, 0, {
-        idle = {
-            images = {{"crosshair1.png", "crosshair2.png"}},
-            time = 0.2
-        }
-    }, true)
-    self.cursor:setanim("idle")
 
     -- RADIO STUFF
     self.radiobox = animated_object(20, self.height - 95, 610, 95, {
@@ -70,9 +63,17 @@ function game:new(width, height, previous_scene, level)
     local function setnextgoal(person)
         local stand = love.math.random() > 0.7
         if stand then
-            person:stand(math.random(1, 4), setnextgoal)
+            if person.type == "assassin" and self.gameplaytime > self.stab_attempt_time then
+                person:stand(1, setnextgoal) -- assassin stands for less time
+            else
+                person:stand(math.random(1, 4), setnextgoal)
+            end
         else
-            person:setgoal(math.random(0, 720), math.random(0, 400), setnextgoal)
+            if person.type == "assassin" and self.gameplaytime > self.stab_attempt_time then
+                person:setgoal(self.vip.x, self.vip.y, setnextgoal) -- assassin targets vip
+            else
+                person:setgoal(math.random(0, 720), math.random(0, 400), setnextgoal)
+            end
         end
     end
 
@@ -168,6 +169,7 @@ function game:new(width, height, previous_scene, level)
         end
 
         give_new_message(radio)
+        self.game_started = true
     end
 
     self:screenshake(0.7, 3)
@@ -185,7 +187,9 @@ function game:new(width, height, previous_scene, level)
 end
 
 function game:update(dt)
-    self.gameplaytime = self.gameplaytime + dt
+    if self.game_started then
+        self.gameplaytime = self.gameplaytime + dt
+    end
 
     -- screenshake
     if self.screenshake_time < self.screenshake_duration then
@@ -214,22 +218,24 @@ function game:update(dt)
     if (not self.on_stab_cooldown) and (self.vip:intersect(self.assassin.x + self.assassin.width / 2, self.assassin.y + self.assassin.height / 2)) then
         -- stab after a certain amount of time, and bad luck
         local canstab = self.gameplaytime > self.canstabtime
-        local stabchance = chancetostab(self.gameplaytime)
-        local willstab = love.math.random() < stabchance
+        if canstab then
+            local stabchance = chancetostab(self.gameplaytime, self.canstabtime)
+            local willstab = love.math.random() < stabchance
 
-        self:screenshake(0.5, 1)
+            self:screenshake(0.5, 0.5)
 
-        print("stab chance:", stabchance, ", success?", willstab)
-        self.on_stab_cooldown = true
-        self.stab_cooldown_timer = 0
+            print("stab chance:", stabchance, ", success?", willstab)
+            self.on_stab_cooldown = true
+            self.stab_cooldown_timer = 0
 
-        if canstab and willstab then
-            sounds.stab:play()
-            return intermission(self.width, self.height, self, self.previous_scene, self.level, self.gameplaytime, "stabbed")
+            if willstab then
+                sounds.stab:play()
+                return intermission(self.width, self.height, self, self.previous_scene, self.level, self.gameplaytime, "stabbed")
+            end
+        else
+            --print("tried to stab too early")
         end
     end
-    
-    self.cursor:update_anim(dt)
 
     return self
 end
@@ -250,9 +256,19 @@ function game:draw()
 
 
     love.graphics.setFont(fonts.radio[self.radio.current_font])
-    love.graphics.print("LEVEL", 10, 10)
+    love.graphics.setColor(1, 1, 1, 1)
 
-    self.cursor:draw()
+    love.graphics.print("LEVEL " .. self.level, 10, 10)
+    local civilians_msg = (self.num_civilians + 1) .. " CIVILIANS"
+    love.graphics.print(civilians_msg, self.width - fonts.radio[self.radio.current_font]:getWidth(civilians_msg) - 10, 10)
+
+    local time_msg = math.floor(self.gameplaytime)
+    if self.gameplaytime < self.canstabtime then
+        love.graphics.setColor(186/255, 227/255, 143/255, 1)
+    else
+        love.graphics.setColor(188/255, 45/255, 64/255, 1)
+    end
+    love.graphics.print(time_msg, self.width / 2 - fonts.radio[self.radio.current_font]:getWidth(time_msg), 10)
 
     return self
 end

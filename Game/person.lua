@@ -180,5 +180,5 @@ function person:draw()
 end
 
 function person:intersect(x, y)
-    return x >= self.x+16 and x <= self.x-24 + self.width and y >= self.y+8 and y <= self.y + self.height-7
+    return x >= self.x+22 and x <= self.x-24 + self.width and y >= self.y+4 and y <= self.y + self.height-40
 end

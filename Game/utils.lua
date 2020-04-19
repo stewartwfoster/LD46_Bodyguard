@@ -16,11 +16,13 @@ function shuffle(tbl)
     return tbl
 end
 
-function chancetostab(time)
+function chancetostab(time, min_time)
     --return 0.436621 * math.log(time) - 1.26776
-    return 0.00790123 * time - 0.054321
+    return 0.00790123 * (time) - 0.054321 -- 0.00790123 * (time - min_time) - 0.054321
 end
 
 function get_num_civilians(level)
-    return 3.75 * level * level - 7.25 * level + 8.75
+    --return 3.75 * level * level - 7.25 * level + 8.75
+    return 5 * level
+    --return 150
 end

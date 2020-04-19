@@ -144,5 +144,6 @@ function radio:draw_all()
     end
 
     love.graphics.setFont(fonts.radio[self.current_font])
+    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(self.text .. " aaaa", 40, 600 - fonts.radio[self.current_font]:getHeight(msg) - 60)
 end

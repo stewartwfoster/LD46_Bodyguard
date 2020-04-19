@@ -58,21 +58,10 @@ function main_menu:new(width, height)
         v:setanim("idle")
     end
 
-
-    love.mouse.setVisible(false)
-    self.cursor = animated_object(0, 0, 0, 0, {
-        idle = {
-            images = {{"crosshair1.png", "crosshair2.png"}},
-            time = 0.2
-        }
-    }, true)
-    self.cursor:setanim("idle")
-
 end
 
 function main_menu:update(dt)
-    x, y = love.mouse.getPosition()
-
+    
     -- screenshake
     if self.screenshake_time < self.screenshake_duration then
         self.screenshake_time = self.screenshake_time + dt
@@ -86,8 +75,6 @@ function main_menu:update(dt)
     for i,v in pairs(self.bricks) do
         v:update_anim(dt)
     end
-
-    self.cursor:update_anim(dt)
 
     return self
 end
@@ -109,8 +96,6 @@ function main_menu:draw()
     for i,v in pairs(self.bricks) do
         v:draw()
     end
-
-    self.cursor:draw()
     
     return self
 end
