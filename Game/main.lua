@@ -13,6 +13,8 @@ function love.load()
 
     love.window.setMode(WIDTH, HEIGHT, {})
     love.window.setTitle("LD46 - Bodyguard")
+    icon = love.image.newImageData("images/crosshair1.png");
+    love.window.setIcon(icon);
 
     love.mouse.setVisible(false)
     cursor = animated_object(0, 0, 0, 0, {
