@@ -24,5 +24,15 @@ end
 function get_num_civilians(level)
     --return 3.75 * level * level - 7.25 * level + 8.75
     return 5 * level
-    --return 150
+    --return 100
+end
+
+function clamp(val, min, max)
+    if val < min then
+        return min
+    elseif val > max then
+        return max
+    end
+
+    return val
 end

@@ -1,5 +1,3 @@
-
-
 function love.load()
     math.randomseed(os.time())
     love.graphics.setDefaultFilter("nearest", "nearest", 1)
@@ -14,7 +12,7 @@ function love.load()
     cur_scene = main_menu(WIDTH, HEIGHT)
 
     love.window.setMode(WIDTH, HEIGHT, {})
-    love.window.setTitle("Bodyguard")
+    love.window.setTitle("LD46 - Bodyguard")
 
     love.mouse.setVisible(false)
     cursor = animated_object(0, 0, 0, 0, {

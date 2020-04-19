@@ -26,6 +26,9 @@ function game:new(width, height, previous_scene, level)
     self.on_stab_cooldown = false
     self.can_shoot = false
 
+    self.bound_x = {0, 720}
+    self.bound_y = {0, 400}
+
     -- RADIO STUFF
     self.radiobox = animated_object(20, self.height - 95, 610, 95, {
         idle = {
@@ -60,19 +63,19 @@ function game:new(width, height, previous_scene, level)
     -- person stuff here
 
     -- either find a new goal or stand still
-    local function setnextgoal(person)
+    self.setnextgoal =  function(person)
         local stand = love.math.random() > 0.7
         if stand then
             if person.type == "assassin" and self.gameplaytime > self.stab_attempt_time then
-                person:stand(1, setnextgoal) -- assassin stands for less time
+                person:stand(1, self.setnextgoal) -- assassin stands for less time
             else
-                person:stand(math.random(1, 4), setnextgoal)
+                person:stand(math.random(1, 4), self.setnextgoal)
             end
         else
             if person.type == "assassin" and self.gameplaytime > self.stab_attempt_time then
-                person:setgoal(self.vip.x, self.vip.y, setnextgoal) -- assassin targets vip
+                person:setgoal(self.vip.x, self.vip.y, self.setnextgoal) -- assassin targets vip
             else
-                person:setgoal(math.random(0, 720), math.random(0, 400), setnextgoal)
+                person:setgoal(math.random(self.bound_x[1], self.bound_x[2]), math.random(self.bound_y[1], self.bound_y[2]), self.setnextgoal)
             end
         end
     end
@@ -96,7 +99,7 @@ function game:new(width, height, previous_scene, level)
             time = 0.2
         }
     }, false, "assassin")
-    self.assassin:random_position(0, 720, 0, 400)
+    self.assassin:random_position(self.bound_x[1], self.bound_x[2], self.bound_y[1], self.bound_y[2])
     
 
 
@@ -165,7 +168,7 @@ function game:new(width, height, previous_scene, level)
         radio.erase_time = 3
 
         for i,v in pairs(self.people) do
-            setnextgoal(v)
+            self.setnextgoal(v)
         end
 
         give_new_message(radio)
@@ -268,7 +271,9 @@ function game:draw()
     else
         love.graphics.setColor(188/255, 45/255, 64/255, 1)
     end
-    love.graphics.print(time_msg, self.width / 2 - fonts.radio[self.radio.current_font]:getWidth(time_msg), 10)
+
+    love.graphics.setFont(fonts.radio_big[self.radio.current_font])
+    love.graphics.print(time_msg, self.width / 2 - fonts.radio_big[self.radio.current_font]:getWidth(time_msg), 10)
 
     return self
 end
@@ -299,6 +304,13 @@ function game:mousepressed(x, y)
                 return intermission(self.width, self.height, self, self.previous_scene, self.level, self.gameplaytime, "vip")
             end
         end
+    end
+
+    -- we had a missed shot! everyone stand still!
+    for i,v in pairs(self.people) do
+        v:setgoal(v.x, v.y, function()
+            v:stand(0.3, self.setnextgoal)
+        end)
     end
 
     return self
