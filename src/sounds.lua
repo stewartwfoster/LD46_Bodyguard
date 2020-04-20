@@ -7,7 +7,7 @@ sounds = {
 }
 
 music = {
-    track1 = love.audio.newSource("audio/track1.wav", "stream")
+    track1 = love.audio.newSource("audio/track1.wav", "static")
 }
 
 music.track1:setLooping(true)
